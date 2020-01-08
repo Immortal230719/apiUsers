@@ -13,7 +13,7 @@
   <div class="grid-row">
     <div class="grid-column -xlarge-12">
       <table>
-        <thead>
+        <thead class="thead">
           <tr>
             <th><i class="icon -user"></i>id</th>
             <th>Email</th>
@@ -23,21 +23,26 @@
             <th>Birthday</th>
           </tr>
         </thead>
-        <tbody id="tableBody">          
+        <tbody id="tableBody" class="tbody">         
         </tbody>
-        <tfoot>
+        <tfoot class="tfoot">
           <tr>
             <td colspan="5">Total Accounts</td>
             <td id="totalUsers"></td>
           </tr>
         </tfoot>
       </table>
+      <div class="wrapper">
+        <div id="pagination" class="pagination_box"></div>
+        <i id="loader" class="icon -spinner -spin"></i>
+      </div>
     </div>
   </div>
   
 
-
+  
   <script src="js/lib/jquery-3.4.1.min.js"></script>
+  <script src="js/lib/jquery.simplePagination.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
