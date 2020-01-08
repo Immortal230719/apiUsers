@@ -2,6 +2,7 @@
 
 var gulp = require("gulp"),
   prefixer = require("gulp-autoprefixer"),
+  sass = require("gulp-sass"),
   cssmin = require("gulp-clean-css"),
   browserSync = require("browser-sync"),
   reload = browserSync.reload;
@@ -17,13 +18,13 @@ var path = {
     //Пути откуда брать исходники
     html: "src/*.html", //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
     js: "src/js/**/*.js", //В стилях и скриптах нам понадобятся только main файлы
-    style: "src/style/*.css"
+    style: "src/style/**/*.scss"
   },
   watch: {
     //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
     html: "src/**/*.html",
     js: "src/js/**/*.js",
-    style: "src/style/**/*.css"
+    style: "src/style/**/*.scss"
   },
   clean: "./build"
 };
@@ -58,6 +59,7 @@ gulp.task("js:build", function() {
 gulp.task("style:build", function() {
   return gulp
     .src(path.src.style) //Выберем наш main.scss
+    .pipe(sass().on("error", sass.logError))
     .pipe(prefixer()) //Добавим вендорные префиксы
     .pipe(cssmin({ compatibility: "ie8" })) //Сожмем
     .pipe(gulp.dest(path.build.css)) //И в build

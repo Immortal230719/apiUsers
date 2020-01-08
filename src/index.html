@@ -4,142 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Choose Your Bank!</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/lib/bloom.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <title>Users api</title>
 </head>
 <body>
-  <div class="container">
-    <div id="welcome" class="wrapper">
-      <h1>Welcome! <br>
-      Please, choose your options.
-      </h1>
-      <button id="startBtn" class="start_btn" type="button">start</button>
-    </div>
-    <div id="stepOne" class="wrapper hidden">
-      <h2>Please, Enter All Fields.</h2>
-      <form id="formStepOne" action="#">
-        <div class="relative">
-          <input id="userName" name="name" type="text" minlength="2" placeholder="Your Name" pattern="[A-Za-z]">
-        </div>
-        <div class="relative">
-          <input id="userAge" name="age" placeholder="Your Age">
-        </div>
-          <select size="1" name="country" id="countrySelect">
-            <option value="default"></option>
-            <option value="Russia">Russian Federation</option>
-            <option value="Germany">Germany</option>
-            <option value="USA">Unated States of America</option>
-          </select>
-          <select class="hidden" size="1" name="city" id="rusCitySelect">
-            <option value="default"></option>
-            <option value="Moscow">Moscow</option>
-            <option value="SaintPeterburg">Saint Peterburg</option>
-            <option value="Kazan">Kazan</option>
-          </select>
-          <select class="hidden" size="1" name="city" id="gerCitySelect">
-            <option value="default"></option>
-            <option value="Berlin">Berlin</option>
-            <option value="Gamburg">Gamburg</option>
-            <option value="Dusseldorf">Dusseldorf</option>
-          </select>
-          <select class="hidden" size="1" name="city" id="usaCitySelect">
-            <option value="default"></option>
-            <option value="NewYork">New York</option>
-            <option value="LosAngeles">Los Angeles</option>
-          </select>
-          <div class="flex">
-            <button id="backStep1" class="start_btn" type="button">back</button>
-            <span class="empty"></span>
-            <button id="nextStep1" class="start_btn" type="submit" disabled>next</button>
-          </div>
-      </form>
-    </div>
-    <div id="stepTwo" class="wrapper hidden">
-      <h2>Your Salary</h2>
-      <form action="#" id="salary">
-        <label class="salary-label" for="lessSalary"> <span class="salary-text"></span> <input value="0" id="0Salary" name="salary"  type="radio"></label>
-        <label class="salary-label" for="middleSalary"> <span class="salary-text"></span> <input value="1" id="1Salary" name="salary"  type="radio"></label>
-        <label class="salary-label" for="goodSalary"> <span class="salary-text"></span> <input value="2" id="2Salary" name="salary"  type="radio"></label>
-        <label class="salary-label" for="bestSalary"> <span class="salary-text"></span> <input value="3" id="3Salary" name="salary"  type="radio"></label>
-        <div class="flex">
-          <button id="backStep2" class="start_btn" type="button">back</button>
-          <span class="empty"></span>
-          <button id="nextStep2" class="start_btn" type="submit" disabled>next</button>
-        </div>
-      </form>
-    </div>
-    <div id="stepThree" class="wrapper hidden">
-      <h2>Choose Bank</h2>
-      <p id="step3Message" class="message hidden">Sorry, but in your city there no banks with our service</p>
-      <p id="step3Message2" class="message hidden">Sorry, but in your country with your age there no banks with our service</p>
-      <form id="bank" action="#">
-        <!-- banks -->
-        <label class="salary-label hidden" for="SberBank"> <span class="salary-text">Sberbank</span> <input value="SberBank" id="SberBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="VTB"> <span class="salary-text">VTB</span> <input value="VTB" id="VTB" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="MTSBank"> <span class="salary-text">MTSBank</span> <input value="MTSBank" id="MTSBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="Akibank"> <span class="salary-text">Akibank</span> <input value="Akibank" id="Akibank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="Avangard"> <span class="salary-text">Avangard</span> <input value="Avangard" id="Avangard" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="AlfaBank"> <span class="salary-text">AlfaBank</span> <input value="AlfaBank" id="AlfaBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="SPBBank"> <span class="salary-text">SPBBank</span> <input value="SBPBank" id="SPBBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="AKBarsBank"> <span class="salary-text">AKBarsBank</span> <input value="AKBarsBank" id="AKBarsBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="TatNeftBank"> <span class="salary-text">TatNeftBank</span> <input value="TatNeftBank" id="TatNeftBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="DeutscheBank"> <span class="salary-text">Deutsche Bank</span> <input value="DeutscheBank" id="DeutscheBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="DZBank"> <span class="salary-text">DZBank</span> <input value="DZBank" id="DZBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="CommerzBank"> <span class="salary-text">CommerzBank</span> <input value="CommerzBank" id="CommerzBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="BankOfAmerica"> <span class="salary-text">BankOfAMERICA</span> <input value="BankOfAmerica" id="BankOfAmerica" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="CitiBank"> <span class="salary-text">CitiBank</span> <input value="CitiBank" id="CitiBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="CNBBank"> <span class="salary-text">CNBBank</span> <input value="CNBBank" id="CNBBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="NYBank"> <span class="salary-text">NYBank</span> <input value="NYBank" id="NYBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="PensionerBank"> <span class="salary-text">PENSIONER BANK</span> <input value="PensionerBank" id="PensionerBank" name="bank"  type="radio"></label>
-
-        <label class="salary-label hidden" for="TheIronBankofBraavos"> <span class="salary-text">The Iron Bank of Braavos</span> <input value="TheIronBankofBraavos" id="TheIronBankofBraavos" name="bank"  type="radio"></label>
-
-        <div class="flex">
-          <button id="backStep3" class="start_btn" type="button">back</button>
-          <span class="empty"></span>
-          <button id="nextStep3" class="start_btn" type="submit" disabled>check</button>
-        </div>
-      </form>
-    </div>    
-  </div>
-  <div id="finish" class="last hidden">
-    <div class="popup">
-      <h2 class="finish-title">Check your input data:</h2>
-      <ul id="finish-data" class="finish-list">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <div>
-        <button id="backFinish" class="popup_close" type="button">&times;</button>      
-        <button id="finishBtn" class="finishBtn" type="button">finish</button>
-      </div>
+  <h1 class="title">Users</h1>
+  <div class="grid-row">
+    <div class="grid-column -xlarge-12">
+      <table>
+        <thead>
+          <tr>
+            <th><i class="icon -user"></i>id</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Status</th>
+            <th>Birthday</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">          
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">Total Accounts</td>
+            <td id="totalUsers"></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
-
   
+
+
   <script src="js/lib/jquery-3.4.1.min.js"></script>
-  <script src="js/lib/jquery.validate.min.js"></script>
-  <script src="js/lib/jquery.cookie.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
