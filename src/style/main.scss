@@ -1,4 +1,5 @@
 @import "lib/simplePagination.scss";
+@import "user-show.scss";
 
 .title {
   margin: 0 auto;
@@ -14,6 +15,19 @@
     height: 75px;
     font-size: 20px;
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.show-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  padding-left: 10px;
 }
 
 .tbody {
@@ -38,10 +52,6 @@
   width: fit-content;
 }
 
-i {
-  margin-right: 10px;
-}
-
 .wrapper {
   position: relative;
   padding: 0 300px;
@@ -55,4 +65,26 @@ i {
   &:before {
     font-size: 40px;
   }
+}
+
+.box {
+  position: fixed;
+  width: 500px;
+  height: fit-content;
+  background: rgba(255, 255, 255, 0);
+  top: 150px;
+  right: 50%;
+  transform: translateX(50%);
+  border-radius: 10px;
+  border: none;
+  padding: 20px;
+  color: #fff;
+}
+
+.pop-bg {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(0.25turn, #3f87a6b4, #ebf8e1bb, #f69c3cb0);
 }

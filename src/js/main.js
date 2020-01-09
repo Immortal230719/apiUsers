@@ -5,6 +5,7 @@ $(document).ready(function() {
   let $totalUsers = $("#totalUsers");
   let $loader = $("#loader");
   let $paginatorBox = $("#pagination");
+  let popupWrapper = $("#popup");
 
   // get data from server
 
@@ -19,6 +20,17 @@ $(document).ready(function() {
     $totalUsers.text(numberOfUsers);
 
     createPagination(data, numberOfUsers);
+  });
+
+  // events
+
+  popupWrapper.on("click", function(e) {
+    if (e.target.id === "popup" || e.target.className === "show-user_close") {
+      popupWrapper.fadeOut(100);
+      return;
+    } else {
+      return;
+    }
   });
 
   // functions
@@ -38,8 +50,11 @@ $(document).ready(function() {
         }
         $("<td>", { text: resArr[index] }).appendTo(tr);
       }
+      $(
+        '<td><a href="#" class="show-btn"><i class="icon -user"></i></a></td>'
+      ).appendTo(tr);
     } else {
-      console.log("error");
+      console.log("error: objOfUser not typeof object");
     }
 
     $usersWrapper.append(fragment);
@@ -76,4 +91,36 @@ $(document).ready(function() {
       }
     });
   }
+
+  // show event
+
+  $usersWrapper.on("click", ".show-btn", function(e) {
+    e.preventDefault();
+    let idOfUser = $(this)
+      .parent()
+      .siblings()[0].textContent;
+    $.getJSON(`https://app2000.host/api/users/${idOfUser}`).done(function(
+      data
+    ) {
+      const userId = data.id === null ? "unknown" : data.id;
+      const userEmail = data.email === null ? "unknown" : data.email;
+      const userStatus = data.status === null ? "unknown" : data.status;
+      const userBirthday = data.birth_day === null ? "unknown" : data.birth_day;
+      const userName = data.first_name === null ? "" : data.first_name;
+      const lastName = data.last_name === null ? "" : data.last_name;
+      const userFullName = `${userName} ${lastName}`;
+      popupWrapper
+        .children()
+        .children()
+        .remove();
+      popupWrapper.children().load("user-show.html", function() {
+        $("#userName").text(userFullName);
+        $("#userID").text(userId);
+        $("#userEmail").text(userEmail);
+        $("#userStatus").text(userStatus);
+        $("#userBirthday").text(userBirthday);
+      });
+      popupWrapper.fadeIn(100);
+    });
+  });
 });
