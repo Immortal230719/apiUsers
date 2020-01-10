@@ -4,18 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/lib/bloom.min.css">
+  <link rel="stylesheet" href="css/lib/bulma.min.css">
   <link rel="stylesheet" href="css/main.css">
   <title>Users api</title>
 </head>
 <body>
-  <h1 class="title">Users</h1>
-  <div class="grid-row">
-    <div class="grid-column -xlarge-12">
-      <table>
-        <thead class="thead">
+  <div id="sprite" class="hidden"></div>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Users</h1>
+      <table class="table is-hoverable is-fullwidth is-striped">
+        <thead class="table_thead">
           <tr>
-            <th>id</th>
+            <th>
+              <svg class="table_thead_icon">
+                <use xlink:href="#user_icon"></use>
+              </svg>
+              id
+            </th>
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -24,9 +31,9 @@
             <th>Show</th>
           </tr>
         </thead>
-        <tbody id="tableBody" class="tbody">         
+        <tbody id="tableBody" class="table_tbody">         
         </tbody>
-        <tfoot class="tfoot">
+        <tfoot class="table_tfoot">
           <tr>
             <td colspan="6">Total Accounts</td>
             <td id="totalUsers"></td>
@@ -35,12 +42,10 @@
       </table>
       <div class="wrapper">
         <div id="pagination" class="pagination_box"></div>
-        <i id="loader" class="icon -spinner -spin"></i>
+        <span id="loader" class="loading">Loading...</span>
       </div>
     </div>
-  </div>
-
-  <a href="#" class="show-btn hidden" id="pop"  data-reveal-id="myModal" data-animation="fade"></a>
+  </section>  
 
   <div id="popup"  class="pop-bg hidden">
     <div class="box">

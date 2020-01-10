@@ -1,0 +1,43 @@
+.show-user {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  figure {
+    background-color: rgb(172, 172, 172);
+  }
+  figcaption {
+    font-size: 20px;
+    color: #fff;
+  }
+  &_close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+  }
+  &_ul {
+    width: 100%;
+    list-style: none;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+      height: 60px;
+      padding: 15px;
+      background: linear-gradient(to right, #a1b5f7, #6caefa);
+      &:nth-child(1) {
+        border-radius: 5px 5px 0 0;
+      }
+      &:nth-child(4) {
+        border-radius: 0 0 5px 5px;
+      }
+    }
+  }
+  &_samp {
+    margin-left: 15px;
+  }
+}

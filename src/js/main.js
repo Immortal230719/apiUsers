@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  // load svg sprite
+
+  $("#sprite").load("/sprite.html");
+
   // variables
 
   let $usersWrapper = $("#tableBody");
@@ -51,7 +55,7 @@ $(document).ready(function() {
         $("<td>", { text: resArr[index] }).appendTo(tr);
       }
       $(
-        '<td><a href="#" class="show-btn"><i class="icon -user"></i></a></td>'
+        '<td><a href="#" class="show-btn"><svg class="show-btn_icon"><use xlink:href="#profile_icon"></use></svg></a></td>'
       ).appendTo(tr);
     } else {
       console.log("error: objOfUser not typeof object");

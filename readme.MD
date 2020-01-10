@@ -5,7 +5,7 @@ This is the work with simple backend api with GET POST PATCH DELETE.
 Tools: 
 
 * jQuery.latest
-* bloom.css 
+* Bulma 
 
 ### Run Project:
 
