@@ -4,21 +4,16 @@
   flex-direction: column;
   align-items: center;
   figure {
+    position: relative;
     background-color: rgb(172, 172, 172);
   }
   figcaption {
     font-size: 20px;
     color: #fff;
-  }
-  &_close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 30px;
-    cursor: pointer;
-    color: rgb(0, 0, 0);
+    width: max-content;
   }
   &_ul {
+    margin-top: 80px;
     width: 100%;
     list-style: none;
     li {

@@ -32,8 +32,13 @@ var path = {
 // запуск сервера
 gulp.task("server", function() {
   browserSync({
+    port: 3000,
     server: {
-      baseDir: "build"
+      baseDir: path.build.html,
+      middleware: function(req, res, next) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        next();
+      }
     }
   });
 });

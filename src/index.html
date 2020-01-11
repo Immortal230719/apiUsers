@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/lib/bulma.min.css">
+  <link rel="stylesheet" href="css/lib/datepicker.min.css">
   <link rel="stylesheet" href="css/main.css">
   <title>Users api</title>
 </head>
@@ -12,8 +13,9 @@
   <div id="sprite" class="hidden"></div>
 
   <section class="section">
-    <div class="container">
-      <h1 class="title">Users</h1>
+    <div class="container is-fluid">
+      <h1 class="title is-1 is-centered is-end">Users</h1>
+      <button id="create" class="button is-primary is-medium is-rounded is-pulled-right">Create New User</button>
       <table class="table is-hoverable is-fullwidth is-striped">
         <thead class="table_thead">
           <tr>
@@ -29,31 +31,105 @@
             <th>Status</th>
             <th>Birthday</th>
             <th>Show</th>
+            <th>Change</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody id="tableBody" class="table_tbody">         
         </tbody>
         <tfoot class="table_tfoot">
           <tr>
-            <td colspan="6">Total Accounts</td>
+            <td colspan="8">Total Accounts</td>
             <td id="totalUsers"></td>
           </tr>
         </tfoot>
       </table>
       <div class="wrapper">
         <div id="pagination" class="pagination_box"></div>
-        <span id="loader" class="loading">Loading...</span>
+        <progress id="loader" class="progress is-link loader hidden" max="100">10%</progress>
       </div>
     </div>
-  </section>  
+  </section>
 
-  <div id="popup"  class="pop-bg hidden">
-    <div class="box">
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div id="modal" class="modal-content">
+           
     </div>
+    <button class="modal-close is-large" aria-label="close"></button>
   </div>
+
+  <!-- createUser modal start -->
+
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div id="modalCreate" class="modal-content">
+      <form enctype="multipart/form-data" id="createUser" action="#" method="POST" class="create">
+        <div class="field">
+          <label class="label">First Name (required)</label>
+          <div class="control">
+            <input id="firstName" class="input" name="firstName" type="text" placeholder="e.g Alex">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label">Last Name</label>
+          <div class="control">
+            <input id="lastName" class="input" name="lastName" type="text" placeholder="e.g Smith">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label">Email (required)</label>
+          <div class="control">
+            <input id="email" class="input" name="email" type="email" placeholder="e.g. alexsmith@gmail.com">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label">Status (required)</label>
+          <div class="control">
+            <div class="select is-small">
+              <select id="statusSelect" name="statusSelect">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label">BirthDay</label>
+          <div class="control">
+            <input id="datepicker" name="datepicker" type="text"/>
+          </div>
+        </div>
+        
+        <div class="field is-grouped">
+          <div class="control">
+            <button id="createDiasabledBtn" type="submit" class="button is-link" disabled>Create</button>
+          </div>
+          <div class="control">
+            <button type="reset" class="button is-link is-light">Reset</button>
+          </div>
+        </div>
+      </form>      
+      </div>
+      <div id="success" class="notification  is-success hidden successUser">
+        <span id="successText" class="is-block"></span><button id="successOkBtn" class="button is-success is-light  is-fullwidth is-small">OK</button>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+    
+  </div>
+
+  <!-- createUser modal end -->
   
   <script src="js/lib/jquery-3.4.1.min.js"></script>
   <script src="js/lib/jquery.simplePagination.js"></script>
+  <script src="js/lib/datepicker.min.js"></script>
+  <script src="js/lib/jquery.validate.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -4,12 +4,14 @@
 // new variables
 
 .title {
-  margin: 0 auto;
-  margin-top: 100px;
-  margin-bottom: 50px;
-  text-align: center;
+  margin: 30px;
   font-size: 50px;
   text-transform: uppercase;
+  text-align: center;
+}
+
+.section {
+  padding: 0;
 }
 
 .table {
@@ -50,7 +52,8 @@
   display: none;
 }
 
-.show-btn {
+.show-btn,
+.update-btn {
   display: flex;
   align-items: center;
   width: 100%;
@@ -61,37 +64,30 @@
   }
 }
 
-.pagination_box {
-  margin-top: 50px;
-}
-
 .simple-pagination {
-  margin: 50px auto;
+  margin: 0 auto;
   width: fit-content;
 }
 
 .wrapper {
+  margin-top: 50px 0;
   position: relative;
   padding: 0 300px;
 }
 
-.loading {
-  opacity: 0;
+.loader {
+  width: 300px;
+  height: 10px;
   position: absolute;
-  right: 300px;
-  top: 0;
-  font-size: 20px;
-  font-weight: bold;
-  &:before {
-    font-size: 40px;
-  }
+  top: 5px;
+  right: 100px;
 }
 
-.box {
+.modal-content {
   position: fixed;
   width: 500px;
   height: fit-content;
-  background: rgba(255, 255, 255, 0);
+  background: rgb(107, 107, 107);
   top: 150px;
   right: 50%;
   transform: translateX(50%);
@@ -99,12 +95,21 @@
   border: none;
   padding: 20px;
   color: #fff;
+  box-shadow: 0 5px 20px 0 rgba(75, 75, 75, 0.589);
 }
 
-.pop-bg {
-  position: fixed;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  background: linear-gradient(0.25turn, #3f87a6b4, #ebf8e1bb, #f69c3cb0);
+.label {
+  color: #fff;
+}
+
+.notification {
+  padding: 30px;
+  span {
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+  button {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
