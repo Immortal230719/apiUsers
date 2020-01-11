@@ -42,10 +42,7 @@ gulp.task("server", function() {
     }
   });
 });
-// чистка если нужно папки 'build'
-gulp.task("clean", function(cb) {
-  rimraf(path.clean, cb);
-});
+
 // сборка HTML
 gulp.task("html:build", function() {
   return gulp

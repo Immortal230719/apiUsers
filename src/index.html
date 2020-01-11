@@ -51,13 +51,42 @@
     </div>
   </section>
 
+  <!-- modal for show user start -->
+
   <div class="modal">
     <div class="modal-background"></div>
-    <div id="modal" class="modal-content">
-           
+    <div id="modal" class="modal-content">           
     </div>
     <button class="modal-close is-large" aria-label="close"></button>
   </div>
+
+  <!-- modal for show user end -->
+
+  <!-- modal for delete user start -->
+
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div id="deleteUser" class="modal-content">
+      <div class="notification is-warning successUser">
+        <span class="is-block">Do You Really Want To Delete This User? </span>        
+        <div class="field is-grouped">
+          <div class="control">
+            <button id="yes" type="button" class="button is-danger">YES</button>
+          </div>
+          <div class="control">
+            <button id="no" type="button" class="button is-info">NO</button>
+          </div>         
+        </div>        
+      </div>
+      <div id="containerForUserData"></div>               
+    </div>
+    <div id="deleteDone" class="notification  is-success hidden successUser">
+      <span class="is-block">User Deleted Successfully</span><button id="deleteOkBtn" class="button is-success is-light  is-fullwidth is-small">OK</button>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+
+  <!-- modal for delete user end -->
 
   <!-- createUser modal start -->
 
@@ -108,11 +137,14 @@
         
         <div class="field is-grouped">
           <div class="control">
-            <button id="createDiasabledBtn" type="submit" class="button is-link" disabled>Create</button>
+            <button id="createDiasabledBtn" type="submit" class="button is-primary" disabled>CREATE</button>
           </div>
           <div class="control">
-            <button type="reset" class="button is-link is-light">Reset</button>
+            <button id="updateUser" type="button" class="button is-primary">UPDATE</button>
           </div>
+          <div class="control">
+            <button type="reset" class="button is-link is-light">RESET</button>
+          </div>          
         </div>
       </form>      
       </div>
@@ -121,8 +153,6 @@
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
-    
-  </div>
 
   <!-- createUser modal end -->
   

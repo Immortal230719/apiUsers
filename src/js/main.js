@@ -5,15 +5,19 @@ $(document).ready(function() {
 
   // variables
 
-  let $usersWrapper = $("#tableBody");
-  let $totalUsers = $("#totalUsers");
-  let $loader = $("#loader");
-  let $paginatorBox = $("#pagination");
-  let $popupWrapper = $("#modal");
-  let $modalCreate = $("#modalCreate");
-  let $createUserBtn = $("#create");
-  let $submitCreateFormBtn = $("#createDiasabledBtn");
-  let $successWrapper = $("#success");
+  const $usersWrapper = $("#tableBody");
+  const $totalUsers = $("#totalUsers");
+  const $loader = $("#loader");
+  const $paginatorBox = $("#pagination");
+  const $popupWrapper = $("#modal");
+  const $modalCreate = $("#modalCreate");
+  const $createUserBtn = $("#create");
+  const $createUserForm = $("#createUser");
+  const $submitCreateFormBtn = $("#createDiasabledBtn");
+  const $successWrapper = $("#success");
+  const $updateUserBtn = $("#updateUser");
+  const $deletePopup = $("#deleteUser");
+  const $deleteDoneWrap = $("#deleteDone");
 
   // get data from server
 
@@ -56,6 +60,18 @@ $(document).ready(function() {
     }
   });
 
+  $deletePopup.parent().on("click", function(e) {
+    if (
+      e.target.className === "modal-background" ||
+      e.target.className === "modal-close is-large"
+    ) {
+      $deletePopup.parent().removeClass("is-active is-clipped");
+      return;
+    } else {
+      return;
+    }
+  });
+
   // functions
 
   function renderUser(objOfUser) {
@@ -64,7 +80,9 @@ $(document).ready(function() {
     if (typeof objOfUser === "object") {
       let resArr = Object.values(objOfUser); //create array of values from user
       let tr = $("<tr>").appendTo(fragment);
-      $("<th>", { text: objOfUser.id }).appendTo(tr);
+      $("<th id=" + objOfUser.id + ">")
+        .text(objOfUser.id)
+        .appendTo(tr);
       for (let index = 1; index < resArr.length; index++) {
         //for each value create element <td></td>
         if (resArr[index] == undefined) {
@@ -98,6 +116,9 @@ $(document).ready(function() {
       $(
         '<td><a href="#" class="update-btn"><svg class="show-btn_icon"><use xlink:href="#update_icon"></use></svg></a></td>'
       ).appendTo(tr);
+      $(
+        '<td><a href="#" class="delete-btn"><svg class="show-btn_icon"><use xlink:href="#delete_icon"></use></svg></a></td>'
+      ).appendTo(tr);
     } else {
       console.log("error: objOfUser not typeof object");
     }
@@ -108,7 +129,7 @@ $(document).ready(function() {
 
   // validate input data
 
-  let validator = $("#createUser").validate({
+  let validator = $createUserForm.validate({
     rules: {
       firstName: {
         required: true,
@@ -137,8 +158,13 @@ $(document).ready(function() {
 
   $createUserBtn.on("click", function(e) {
     e.preventDefault();
+    $createUserForm.each(function() {
+      this.reset();
+    });
+    $updateUserBtn.fadeOut(0);
     $modalCreate.fadeIn(0);
-    $modalCreate.parent().addClass("is-active is-clipped");
+    $submitCreateFormBtn.parent().fadeIn(0);
+    $deletePopup;
     validator.invalid.firstName = true;
     validator.invalid.email = true;
   });
@@ -171,16 +197,10 @@ $(document).ready(function() {
 
   //on create form submit handler
 
-  $("#createUser").on("submit", function(e) {
+  $createUserForm.on("submit", function(e) {
     e.preventDefault();
     let userData = {};
-    userData.email = $("#email").val();
-    userData.first_name = $("#firstName").val();
-    userData.last_name =
-      $("#lastName").val() === "" ? null : $("#lastName").val();
-    userData.status = parseInt($("#statusSelect").val());
-    userData.birth_day =
-      $("#datepicker").val() === "" ? null : $("#datepicker").val();
+    createObjOfUser(userData);
     $.post("https://app2000.host/api/users", userData).done(function(data) {
       $modalCreate.fadeOut(0);
       $("#successText").text("User Created Successfully");
@@ -195,6 +215,14 @@ $(document).ready(function() {
     e.preventDefault();
     $modalCreate.parent().removeClass("is-active is-clipped");
     $successWrapper.fadeOut(100);
+  });
+
+  // delete success modal
+
+  $deleteDoneWrap.on("click", "#deleteOkBtn", function(e) {
+    e.preventDefault();
+    $deletePopup.parent().removeClass("is-active is-clipped");
+    $deleteDoneWrap.fadeOut(100);
   });
 
   // pagination
@@ -238,22 +266,129 @@ $(document).ready(function() {
     $.getJSON(`https://app2000.host/api/users/${idOfUser}`).done(function(
       data
     ) {
-      const userId = data.id === null ? "unknown" : data.id;
-      const userEmail = data.email === null ? "unknown" : data.email;
-      const userStatus = data.status === null ? "unknown" : data.status;
-      const userBirthday = data.birth_day === null ? "unknown" : data.birth_day;
-      const userName = data.first_name === null ? "" : data.first_name;
-      const lastName = data.last_name === null ? "" : data.last_name;
-      const userFullName = `${userName} ${lastName}`;
       $popupWrapper.children().remove();
-      $popupWrapper.load("user-show.html", function() {
-        $("#userName").text(userFullName);
-        $("#userID").text(userId);
-        $("#userEmail").text(userEmail);
-        $("#userStatus").text(userStatus);
-        $("#userBirthday").text(userBirthday);
-      });
+      showUserObj(data, $popupWrapper);
       $popupWrapper.parent().addClass("is-active is-clipped");
+    });
+  });
+
+  //insert response obj in show html data
+
+  function showUserObj(data, $wrapper) {
+    const userId = data.id === null ? "unknown" : data.id;
+    const userEmail = data.email === null ? "unknown" : data.email;
+    const userStatus = data.status === null ? "unknown" : data.status;
+    const userBirthday = data.birth_day === null ? "unknown" : data.birth_day;
+    const userName = data.first_name === null ? "" : data.first_name;
+    const lastName = data.last_name === null ? "" : data.last_name;
+    const userFullName = `${userName} ${lastName}`;
+    $wrapper.load("user-show.html", function() {
+      $("#userName").text(userFullName);
+      $("#userID").text(userId);
+      $("#userEmail").text(userEmail);
+      $("#userStatus").text(userStatus);
+      $("#userBirthday").text(userBirthday);
+    });
+    return;
+  }
+
+  //create objOfUser with data to ajax
+
+  function createObjOfUser(emptyObj) {
+    emptyObj.email = $("#email").val();
+    emptyObj.first_name = $("#firstName").val();
+    emptyObj.last_name =
+      $("#lastName").val() === "" ? null : $("#lastName").val();
+    emptyObj.status = parseInt($("#statusSelect").val());
+    emptyObj.birth_day =
+      $("#datepicker").val() === "" ? null : $("#datepicker").val();
+    return emptyObj;
+  }
+
+  // update user
+
+  $usersWrapper.on("click", ".update-btn", function(e) {
+    e.preventDefault();
+    let idOfUser = $(this)
+      .parent()
+      .siblings()[0].textContent;
+    $.getJSON(`https://app2000.host/api/users/${idOfUser}`)
+      .done(function(data) {
+        $modalCreate.fadeIn(0);
+        $submitCreateFormBtn.parent().fadeOut(0);
+        $modalCreate.parent().addClass("is-active is-clipped");
+        $updateUserBtn.fadeIn(0);
+        $("#email")
+          .parent()
+          .parent()
+          .fadeOut(0);
+        $("#firstName").val(data.first_name);
+        $("#lastName").val(data.last_name);
+        $("#statusSelect").val(data.status);
+        $("#datepicker").val(data.birth_day);
+      })
+      .fail(function(error) {
+        console.log(error);
+      });
+    $updateUserBtn.on("click", function(e) {
+      e.preventDefault();
+      let userData = {};
+      createObjOfUser(userData);
+      delete userData.email;
+      $.ajax({
+        type: "Patch",
+        url: `https://app2000.host/api/users/${idOfUser}`,
+        data: userData
+      })
+        .done(function(data) {
+          $modalCreate.fadeOut(0);
+          $("#successText").text("User Updated Successfully");
+          $successWrapper.fadeIn(100);
+        })
+        .fail(function(error) {
+          console.log(error);
+        });
+    });
+  });
+
+  // delete user
+
+  $usersWrapper.on("click", ".delete-btn", function(e) {
+    e.preventDefault();
+    let $wrapperData = $deletePopup.children("#containerForUserData");
+    let idOfUser = $(this)
+      .parent()
+      .siblings()[0].textContent;
+    $.getJSON(`https://app2000.host/api/users/${idOfUser}`).done(function(
+      data
+    ) {
+      ("#containerForUserData");
+      showUserObj(data, $wrapperData);
+      $deletePopup.parent().addClass("is-active is-clipped");
+    });
+
+    $("#no").on("click", function(e) {
+      e.preventDefault();
+      $deletePopup.parent().removeClass("is-active is-clipped");
+    });
+
+    $("#yes").on("click", function(e) {
+      e.preventDefault();
+      $.ajax({
+        type: "DELETE",
+        url: `https://app2000.host/api/users/${idOfUser}`
+      })
+        .done(function(data) {
+          $deletePopup.fadeOut(0);
+          $deleteDoneWrap.fadeIn(100);
+          $usersWrapper
+            .find(`#${idOfUser}`)
+            .parent()
+            .remove();
+        })
+        .fail(function(error) {
+          console.log(error);
+        });
     });
   });
 });
