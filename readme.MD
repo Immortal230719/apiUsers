@@ -1,6 +1,6 @@
 # apiUsers
 
-This is the work with simple backend api with GET POST PATCH DELETE.
+This is simple CRUD application for RESTful api.
 
 Tools: 
 

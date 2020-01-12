@@ -1,3 +1,8 @@
+//= lib/jquery-3.4.1.min.js
+//= lib/datepicker.min.js
+//= lib/jquery.simplePagination.js
+//= lib/jquery.validate.min.js
+
 $(document).ready(function() {
   // load svg sprite
 
@@ -27,7 +32,7 @@ $(document).ready(function() {
     // render data
 
     let arrayOfUsers = data.data;
-    arrayOfUsers.forEach(el => renderUser(el));
+    arrayOfUsers.forEach(el => renderUser(el, $usersWrapper));
 
     $totalUsers.text(numberOfUsers);
 
@@ -74,57 +79,63 @@ $(document).ready(function() {
 
   // functions
 
-  function renderUser(objOfUser) {
+  function renderUser(objOfUser, wrapper) {
     let fragment = document.createDocumentFragment();
 
     if (typeof objOfUser === "object") {
       let resArr = Object.values(objOfUser); //create array of values from user
       let tr = $("<tr>").appendTo(fragment);
-      $("<th id=" + objOfUser.id + ">")
-        .text(objOfUser.id)
-        .appendTo(tr);
-      for (let index = 1; index < resArr.length; index++) {
-        //for each value create element <td></td>
-        if (resArr[index] == undefined) {
-          $("<td>", { text: "unknown" }).appendTo(tr);
-          continue;
-        }
-        if (typeof resArr[index] === "number") {
-          switch (resArr[index]) {
-            case 1: {
-              $("<td>", { text: "NOT_VERIFIED" }).appendTo(tr);
-              break;
-            }
-            case 2: {
-              $("<td>", { text: "ACTIVE" }).appendTo(tr);
-              break;
-            }
-            case 3: {
-              $("<td>", { text: "BANNED" }).appendTo(tr);
-              break;
-            }
-            default:
-              break;
-          }
-          continue;
-        }
-        $("<td>", { text: resArr[index] }).appendTo(tr);
-      }
-      $(
-        '<td><a href="#" class="show-btn"><svg class="show-btn_icon"><use xlink:href="#profile_icon"></use></svg></a></td>'
-      ).appendTo(tr);
-      $(
-        '<td><a href="#" class="update-btn"><svg class="show-btn_icon"><use xlink:href="#update_icon"></use></svg></a></td>'
-      ).appendTo(tr);
-      $(
-        '<td><a href="#" class="delete-btn"><svg class="show-btn_icon"><use xlink:href="#delete_icon"></use></svg></a></td>'
-      ).appendTo(tr);
+      renderSingleUser(resArr, tr);
     } else {
       console.log("error: objOfUser not typeof object");
     }
 
-    $usersWrapper.append(fragment);
+    wrapper.append(fragment);
     return;
+  }
+
+  //render single user
+
+  function renderSingleUser(arrOfValues, trWrapper) {
+    $("<th id=" + arrOfValues[0] + ">")
+      .text(arrOfValues[0])
+      .appendTo(trWrapper);
+    for (let index = 1; index < arrOfValues.length; index++) {
+      //for each value create element <td></td>
+      if (arrOfValues[index] == undefined) {
+        $("<td>", { text: "unknown" }).appendTo(trWrapper);
+        continue;
+      }
+      if (typeof arrOfValues[index] === "number") {
+        switch (arrOfValues[index]) {
+          case 1: {
+            $("<td>", { text: "NOT_VERIFIED" }).appendTo(trWrapper);
+            break;
+          }
+          case 2: {
+            $("<td>", { text: "ACTIVE" }).appendTo(trWrapper);
+            break;
+          }
+          case 3: {
+            $("<td>", { text: "BANNED" }).appendTo(trWrapper);
+            break;
+          }
+          default:
+            break;
+        }
+        continue;
+      }
+      $("<td>", { text: arrOfValues[index] }).appendTo(trWrapper);
+    }
+    $(
+      '<td><a href="#" class="show-btn"><svg class="show-btn_icon"><use xlink:href="#profile_icon"></use></svg></a></td>'
+    ).appendTo(trWrapper);
+    $(
+      '<td><a href="#" class="update-btn"><svg class="show-btn_icon"><use xlink:href="#update_icon"></use></svg></a></td>'
+    ).appendTo(trWrapper);
+    $(
+      '<td><a href="#" class="delete-btn"><svg class="show-btn_icon"><use xlink:href="#delete_icon"></use></svg></a></td>'
+    ).appendTo(trWrapper);
   }
 
   // validate input data
@@ -167,6 +178,7 @@ $(document).ready(function() {
     $deletePopup;
     validator.invalid.firstName = true;
     validator.invalid.email = true;
+    $modalCreate.parent().addClass("is-active is-clipped");
   });
 
   $("#datepicker").datepicker({
@@ -205,6 +217,7 @@ $(document).ready(function() {
       $modalCreate.fadeOut(0);
       $("#successText").text("User Created Successfully");
       $successWrapper.fadeIn(100);
+      console.log(data);
     });
     $(this).each(function() {
       this.reset();
@@ -246,7 +259,9 @@ $(document).ready(function() {
             setTimeout(function() {
               let newArrayOfUsers = data.data;
               $usersWrapper.children().remove();
-              newArrayOfUsers.forEach(el => renderUser(el));
+              newArrayOfUsers.forEach(el => renderUser(el, $usersWrapper));
+              let totalUsers = data.pagination.total;
+              $totalUsers.text(totalUsers);
               $loader.fadeOut(100);
               $paginatorBox.fadeIn(100);
             }, 500);
@@ -330,6 +345,7 @@ $(document).ready(function() {
       .fail(function(error) {
         console.log(error);
       });
+
     $updateUserBtn.on("click", function(e) {
       e.preventDefault();
       let userData = {};
@@ -344,6 +360,11 @@ $(document).ready(function() {
           $modalCreate.fadeOut(0);
           $("#successText").text("User Updated Successfully");
           $successWrapper.fadeIn(100);
+          let arrOfUserValues = Object.values(data);
+          let userId = data.id;
+          let userWrapper = $usersWrapper.find(`#${userId}`).parent();
+          userWrapper.children().remove();
+          setTimeout(renderSingleUser(arrOfUserValues, userWrapper), 0);
         })
         .fail(function(error) {
           console.log(error);
@@ -379,12 +400,11 @@ $(document).ready(function() {
         url: `https://app2000.host/api/users/${idOfUser}`
       })
         .done(function(data) {
+          let userWrapper = $usersWrapper.find(`#${idOfUser}`).parent();
+          userWrapper.children().remove();
           $deletePopup.fadeOut(0);
           $deleteDoneWrap.fadeIn(100);
-          $usersWrapper
-            .find(`#${idOfUser}`)
-            .parent()
-            .remove();
+          return;
         })
         .fail(function(error) {
           console.log(error);

@@ -1,3 +1,5 @@
+@import "lib/bulma.min.scss";
+@import "lib/datepicker.min.scss";
 @import "lib/simplePagination.scss";
 @import "user-show.scss";
 
@@ -18,7 +20,7 @@
   th,
   td {
     vertical-align: inherit;
-    padding: 15px 25px;
+    padding: 10px 25px;
   }
   &_thead {
     &_icon {
@@ -35,7 +37,7 @@
   }
   &_tbody {
     td {
-      height: 50px;
+      height: 40px;
       font-size: 15px;
     }
   }
@@ -88,9 +90,9 @@
   width: 600px;
   height: fit-content;
   background: rgb(107, 107, 107);
-  top: 150px;
+  top: 50vh;
   right: 50%;
-  transform: translateX(50%);
+  transform: translate(50%, -50%);
   border-radius: 10px;
   border: none;
   padding: 20px;
@@ -103,10 +105,10 @@
 }
 
 .notification {
-  padding: 30px;
+  padding: 15px;
   span {
     font-size: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
   button {
     font-size: 20px;

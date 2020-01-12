@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/lib/bulma.min.css">
-  <link rel="stylesheet" href="css/lib/datepicker.min.css">
   <link rel="stylesheet" href="css/main.css">
   <title>Users api</title>
 </head>
@@ -31,7 +29,7 @@
             <th>Status</th>
             <th>Birthday</th>
             <th>Show</th>
-            <th>Change</th>
+            <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -71,10 +69,10 @@
         <span class="is-block">Do You Really Want To Delete This User? </span>        
         <div class="field is-grouped">
           <div class="control">
-            <button id="yes" type="button" class="button is-danger">YES</button>
+            <button id="yes" type="button" class="button is-danger is-small">YES</button>
           </div>
           <div class="control">
-            <button id="no" type="button" class="button is-info">NO</button>
+            <button id="no" type="button" class="button is-info is-small">NO</button>
           </div>         
         </div>        
       </div>
@@ -154,12 +152,8 @@
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
-  <!-- createUser modal end -->
-  
-  <script src="js/lib/jquery-3.4.1.min.js"></script>
-  <script src="js/lib/jquery.simplePagination.js"></script>
-  <script src="js/lib/datepicker.min.js"></script>
-  <script src="js/lib/jquery.validate.min.js"></script>
+  <!-- createUser modal end -->  
+ 
   <script src="js/main.js"></script>
 </body>
 </html>

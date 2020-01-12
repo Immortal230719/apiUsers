@@ -3,6 +3,8 @@
 var gulp = require("gulp"),
   prefixer = require("gulp-autoprefixer"),
   sass = require("gulp-sass"),
+  rigger = require("gulp-rigger"),
+  uglify = require("gulp-uglify-es").default,
   cssmin = require("gulp-clean-css"),
   browserSync = require("browser-sync"),
   reload = browserSync.reload;
@@ -54,6 +56,8 @@ gulp.task("html:build", function() {
 gulp.task("js:build", function() {
   return gulp
     .src(path.src.js) //Найдем наш main файл
+    .pipe(rigger()) //Прогоним через rigger
+    .pipe(uglify()) //Сожмем наш js
     .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
     .pipe(reload({ stream: true })); //И перезагрузим сервер
 });
